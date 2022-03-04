@@ -37,9 +37,23 @@ app.post("/articles", function(req, res){
         content : req.body.content
     })
 
-    newArticle.save();
+    newArticle.save(function(err){
+        if(!err){
+            res.send("Succesfully added an entry");
+        } else {
+            res.send(err);
+        }
+    });
+});
 
-    console.log("added article to db")
+app.delete("/articles", function(req, res){
+    Article.deleteMany(function(err, results){
+        if(!err){
+            res.send("Cleared all entries")
+        }else {
+            res.send(err);
+        }
+    });
 })
 
 app.listen(3000, function(req, res){
